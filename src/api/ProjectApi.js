@@ -45,5 +45,26 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getDeletedProjectListData(posData) {
+    return request({
+      url: "/getDeletedProjectListData",
+      data: posData,
+      method: "post"
+    });
+  },
+  recoverProjectData(posData) {
+    return request({
+      url: "/recoverProject",
+      data: posData,
+      method: "post"
+    });
+  },
+  searchDeletedProjectByKey(posData) {
+    return request({
+      url: "/searchDeletedProjectByKey",
+      data: posData,
+      method: "post"
+    });
   }
 };
