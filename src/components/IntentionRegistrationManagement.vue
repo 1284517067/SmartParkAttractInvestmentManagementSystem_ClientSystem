@@ -1,10 +1,25 @@
 <template>
-  <div></div>
+  <div class="full-height">
+    <div>
+
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "IntentionRegistrationManagement"
+  name: "IntentionRegistrationManagement",
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+
+  },
+  mounted() {
+
+  }
 };
 </script>
 

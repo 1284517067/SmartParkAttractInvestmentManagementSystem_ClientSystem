@@ -16,6 +16,7 @@ import SpatialDataManagement from "@/components/SpatialDataManagement";
 import ProjectSea from "@/components/ProjectSea";
 import IntentionRegistrationManagement from "@/components/IntentionRegistrationManagement";
 import ProjectRecycleBin from "@/components/ProjectRecycleBin";
+import MyProject from "@/components/MyProject";
 
 Vue.use(VueRouter);
 
@@ -80,6 +81,10 @@ const routes = [
       {
         path: "ProjectRecycleBin",
         component: ProjectRecycleBin
+      },
+      {
+        path: "MyProject",
+        component: MyProject
       }
     ]
   }

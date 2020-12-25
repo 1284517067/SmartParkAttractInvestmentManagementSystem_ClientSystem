@@ -66,5 +66,19 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getPersonProjectTableData(posData) {
+    return request({
+      url: "/getPersonProjectTableData",
+      data: posData,
+      method: "post"
+    });
+  },
+  getPersonProjectTableByKey(posData) {
+    return request({
+      url: "/getPersonProjectTableByKey",
+      data: posData,
+      method: "post"
+    });
   }
 };
