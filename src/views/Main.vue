@@ -46,7 +46,23 @@
                 :index="generateIndex(i)"
                 class="submenu"
               >
-                <template slot="title">
+                <template
+                  slot="title"
+                  v-if="item.menuName === '消息中心' && messageCount !== 0"
+                >
+                  <el-badge
+                    :value="messageCount"
+                    :max="99"
+                    class="el-badge-item"
+                  >
+                    <div class="badge-item">
+                      <i :class="item.icon" size="large"></i>
+                    </div>
+                  </el-badge>
+                  {{ item.menuName }}
+                </template>
+
+                <template slot="title" v-else>
                   <i :class="item.icon"></i>
                   {{ item.menuName }}
                 </template>
@@ -104,13 +120,15 @@
 
 <script>
 import MenuApi from "@/api/MenuApi";
+import MessageApi from "@/api/MessageApi";
 
 export default {
   name: "Main",
   data() {
     return {
       menu: "",
-      user: ""
+      user: "",
+      messageCount: 0
     };
   },
   methods: {
@@ -134,9 +152,30 @@ export default {
     },
     generateRoute(route) {
       return route;
+    },
+    generateMessageCount() {
+      let usr = JSON.parse(localStorage.getItem("userInfo"));
+      MessageApi.generateMessageCountData({
+        username: usr.username,
+        positionId: usr.positionId
+      })
+        .then(response => {
+          if (response.data.responseCode == 200) {
+            this.messageCount = response.data.messageCount;
+          }
+        })
+        .catch(error => {
+          this.$message({
+            showClose: true,
+            message: error,
+            type: "error"
+          });
+        });
     }
   },
-  mounted() {},
+  mounted() {
+    this.generateMessageCount();
+  },
 
   created() {
     this.user = JSON.parse(localStorage.getItem("userInfo")).username;

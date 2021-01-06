@@ -41,5 +41,12 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getUserListByPosition(posData) {
+    return request({
+      url: "/getUserListByPosition",
+      data: posData,
+      method: "post"
+    });
   }
 };

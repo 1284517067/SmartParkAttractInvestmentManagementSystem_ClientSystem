@@ -110,6 +110,7 @@
             style="max-width: 200px"
           >
             <el-option label="入驻申请" value="入驻申请"></el-option>
+            <el-option label="意向登记" value="意向登记"></el-option>
             <el-option label="意向协议" value="意向协议"></el-option>
             <el-option label="退租合同" value="退租合同"></el-option>
             <el-option label="租赁合同" value="租赁合同"></el-option>

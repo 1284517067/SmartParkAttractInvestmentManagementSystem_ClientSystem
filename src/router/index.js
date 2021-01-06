@@ -17,8 +17,12 @@ import ProjectSea from "@/components/ProjectSea";
 import IntentionRegistrationManagement from "@/components/IntentionRegistrationManagement";
 import ProjectRecycleBin from "@/components/ProjectRecycleBin";
 import MyProject from "@/components/MyProject";
+import ApprovalMessage from "@/components/ApprovalMessage";
+import IntentionAgreementManagement from "@/components/IntentionAgreementManagement";
 
 Vue.use(VueRouter);
+
+let vue = new Vue();
 
 const routes = [
   {
@@ -85,6 +89,14 @@ const routes = [
       {
         path: "MyProject",
         component: MyProject
+      },
+      {
+        path: "ApprovalMessage",
+        component: ApprovalMessage
+      },
+      {
+        path: "IntentionAgreementManagement",
+        component: IntentionAgreementManagement
       }
     ]
   }
@@ -100,6 +112,11 @@ router.beforeEach((to, from, next) => {
   } else {
     let token = localStorage.getItem("Authorization");
     if (token === null || token === "") {
+      vue.$message({
+        showClose: true,
+        message: "登录已过期",
+        type: "error"
+      });
       next("/login");
     } else {
       next();

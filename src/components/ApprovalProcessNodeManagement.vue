@@ -28,7 +28,7 @@
         </el-button>
       </el-col>
     </el-row>
-    <el-row align="center" style="padding-top: 20px;">
+    <el-row align="center" style="padding-top: 10px;">
       <el-col :span="2" :offset="20">
         <el-button
           type="primary"
@@ -166,7 +166,7 @@
 
     <!-- 新增模态框结束 -->
 
-    <div class="node-block" style="margin-top: 50px ;padding-bottom: 5px">
+    <div class="node-block" style="margin-top: 20px ;padding-bottom: 5px">
       <div class="node-item">
         <div
           class="font-weight-bold title-color"

@@ -5,7 +5,6 @@
         <LoginFrame class="login-frame"></LoginFrame>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
@@ -36,15 +35,13 @@ export default {
   width: 100%;
   height: 100%;
   min-width: 330px;
-  min-height:40px;
+  min-height: 40px;
 }
-.login-block{
+.login-block {
   position: absolute;
   left: 50%;
-  top:40%;
+  top: 40%;
   display: flex;
-  transform:translate(-50%,-50%)
+  transform: translate(-50%, -50%);
 }
-
-
 </style>

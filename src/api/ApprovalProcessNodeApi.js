@@ -13,9 +13,6 @@ export default {
       url: "/postApprovalProcessNodeForm",
       data: posData,
       method: "post"
-      /*
-      headers: { "Content-Type": "application/json;charset=UTF-8" }
-*/
     });
   },
   getApprovalProcessNodeListData(posData) {
@@ -41,6 +38,13 @@ export default {
   getApprovalProcessNodeListByKey(posData) {
     return request({
       url: "/getApprovalProcessNodeListByKey",
+      data: posData,
+      method: "post"
+    });
+  },
+  getApprovalProcessNodesByContractType(posData) {
+    return request({
+      url: "/getApprovalProcessNodesByContractType",
       data: posData,
       method: "post"
     });
