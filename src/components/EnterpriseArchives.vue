@@ -72,6 +72,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
+            <el-form-item label="来源类型">
+              <el-select
+                v-model="enterpriseForm.source"
+                placeholder="请选择来源类型"
+                class="full-width"
+              >
+                <el-option label="自主开发" value="自主开发"></el-option>
+                <el-option label="企业介绍" value="企业介绍"></el-option>
+                <el-option label="主动上门" value="主动上门"></el-option>
+                <el-option label="招商会" value="招商会"></el-option>
+                <el-option label="其他渠道" value="其他渠道"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
             <el-form-item label="企业性质" prop="enterpriseNature">
               <el-select
                 placeholder="请选择企业性质"
@@ -203,6 +218,15 @@
               <el-input
                 type="text"
                 v-model="enterpriseForm.contactPosition"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="联系QQ">
+              <el-input
+                type="text"
+                v-model="enterpriseForm.qq"
+                disabled
               ></el-input>
             </el-form-item>
           </el-col>
@@ -482,7 +506,8 @@ export default {
         contractType: "",
         enterpriseIntroduction: "",
         enterpriseTel: "",
-        spaceName: ""
+        spaceName: "",
+        source: ""
       },
       rules: {
         enterpriseName: [
@@ -621,6 +646,10 @@ export default {
           return "企业电话";
         case "spaceName":
           return "入驻园区";
+        case "qq":
+          return "联系QQ";
+        case "source":
+          return "来源类型";
       }
     },
     getTagType() {

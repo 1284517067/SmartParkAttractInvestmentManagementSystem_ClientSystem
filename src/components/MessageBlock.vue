@@ -61,6 +61,11 @@
         :contract-type="contractType"
         v-if="contractType === '意向登记'"
       ></IntentionRegistrationForm>
+      <IntentionAgreementComponent
+        :form-id="formId"
+        v-if="contractType === '意向协议'"
+      >
+      </IntentionAgreementComponent>
       <OpinionComponent
         :contract-type="contractType"
         :id="formId"
@@ -76,10 +81,15 @@ import MessageApi from "@/api/MessageApi";
 import ApprovalApi from "@/api/ApprovalApi";
 import IntentionRegistrationForm from "@/components/approvalFormComponents/IntentionRegistrationForm";
 import OpinionComponent from "@/components/approvalFormComponents/OpinionComponent";
+import IntentionAgreementComponent from "@/components/approvalFormComponents/IntentionAgreementComponent";
 
 export default {
   name: "MessageBlock",
-  components: { OpinionComponent, IntentionRegistrationForm },
+  components: {
+    IntentionAgreementComponent,
+    OpinionComponent,
+    IntentionRegistrationForm
+  },
   props: ["blockTitle"],
   data() {
     return {

@@ -24,7 +24,7 @@
       :before-close="closeModal"
       modal
     >
-      <div class="float-right">
+      <div class="float-right" v-if="!itemDisable">
         <el-button
           type="primary"
           v-if="
@@ -32,10 +32,15 @@
               intentionRegistrationForm.status === '待发'
           "
           :loading="sendLoading"
+          :disabled="sendDisable"
           @click="sendForm"
           >送办</el-button
         >
-        <el-button type="primary" :loading="submitLoading" @click="saveForm"
+        <el-button
+          type="primary"
+          :loading="submitLoading"
+          @click="saveForm"
+          :disabled="submitDisable"
           >保存</el-button
         >
       </div>
@@ -52,6 +57,7 @@
                 type="text"
                 v-model="intentionRegistrationForm.enterpriseName"
                 class="full-width"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -61,6 +67,7 @@
                 type="text"
                 v-model="intentionRegistrationForm.enterpriseArea"
                 class="full-width"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -70,6 +77,7 @@
                 v-model="intentionRegistrationForm.source"
                 placeholder="请选择来源类型"
                 class="full-width"
+                :disabled="itemDisable"
               >
                 <el-option label="自主开发" value="自主开发"></el-option>
                 <el-option label="企业介绍" value="企业介绍"></el-option>
@@ -86,6 +94,7 @@
                 v-model="intentionRegistrationForm.industryTypeId"
                 @focus="getIndustryTypeSelect"
                 class="full-width"
+                :disabled="itemDisable"
               >
                 <el-option
                   v-for="item in industryTypeList"
@@ -103,6 +112,7 @@
                 v-model="intentionRegistrationForm.contractType"
                 class="full-width"
                 clearable
+                :disabled="itemDisable"
               >
                 <el-option label="租赁合同" value="租赁合同"></el-option>
                 <el-option label="物业合同" value="物业合同"></el-option>
@@ -114,6 +124,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.contact"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -122,6 +133,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.contactTel"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -130,6 +142,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.contactDepartment"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -138,6 +151,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.contactPosition"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -146,6 +160,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.qq"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -154,6 +169,7 @@
               <el-input
                 type="email"
                 v-model="intentionRegistrationForm.contactEmail"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -162,6 +178,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.enterpriseTel"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -170,6 +187,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.enterpriseUrl"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -178,6 +196,7 @@
               <el-input
                 type="text"
                 v-model="intentionRegistrationForm.enterpriseLegalPerson"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -185,6 +204,7 @@
             <el-form-item label="成立时间" prop="registrationTime">
               <el-date-picker
                 v-model="intentionRegistrationForm.registrationTime"
+                :disabled="itemDisable"
                 type="date"
                 placeholder="请选择"
                 value-format="yyyy-MM-dd"
@@ -197,6 +217,7 @@
               <el-input
                 type="text"
                 v-model.number="intentionRegistrationForm.registeredCapital"
+                :disabled="itemDisable"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -205,6 +226,7 @@
               <el-select
                 placeholder="请选择工商注册类型"
                 v-model="intentionRegistrationForm.businessRegistrationType"
+                :disabled="itemDisable"
                 class="full-width"
               >
                 <el-option label="国有经济" value="国有经济"></el-option>
@@ -229,6 +251,7 @@
                 v-model="intentionRegistrationForm.departmentId"
                 @focus="getDepartmentSelect"
                 class="full-width"
+                :disabled="itemDisable"
               >
                 <el-option
                   v-for="item in departments"
@@ -245,6 +268,7 @@
                 v-model="intentionRegistrationForm.departmentManager"
                 @focus="getDepartmentManagers"
                 class="full-width"
+                :disabled="itemDisable"
               >
                 <el-option
                   v-for="item in managers"
@@ -278,24 +302,13 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <!-- <template v-if="approvalProcess.length !== 0">
-            <el-col
-              v-for="item in approvalProcess"
-              :key="item.approvalProcessNodeId"
-            >
-              <el-form-item :label="item.approvalProcessNodeName + '意见'">
-                <el-input
-                  type="textarea"
-                  v-model="item.opinion"
-                  disabled
-                ></el-input>
-              </el-form-item>
-            </el-col>
-          </template>-->
           <ApprovalOpinions
+            ref="IntentionRegistrationApprovalOpinion"
+            v-if="modalFormVisible"
+            business-type="新签"
             contract-type="意向登记"
             :id="intentionRegistrationForm.formId"
-            :form-status="intentionRegistrationForm.status"
+            :form-status="activeName"
           ></ApprovalOpinions>
         </el-form>
       </el-row>
@@ -344,31 +357,28 @@
         <el-table-column label="联系电话" prop="contactTel"> </el-table-column>
         <el-table-column label="状态" prop="approvalStatus"> </el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <template slot-scope="scope" class="flex-block">
+            <ApprovalProcessStep
+              v-if="activeName === '已发'"
+              :form-id="scope.row.formId"
+              :contract-type="contractType"
+            ></ApprovalProcessStep>
             <el-tooltip
-              content="查看审批进度"
+              content="查看"
               effect="dark"
               placement="top"
               v-if="activeName === '已发'"
             >
-              <el-popover placement="right" trigger="click" width="200">
-                <el-steps finish-status="success" :active="activeStep">
-                  <el-step
-                    v-for="item in approvalStep"
-                    :title="item.approvalProcessNodeName"
-                    :description="item.status"
-                    :status="setStepStatus(item.status, item.opinionId)"
-                    :key="item.opinionId"
-                  ></el-step>
-                </el-steps>
-                <el-button
-                  type="text"
-                  slot="reference"
-                  @click="getApprovalStep(scope.row)"
-                >
-                  <i class="el-icon-finished"></i>
-                </el-button>
-              </el-popover>
+              <el-button
+                style="margin-left: 10px"
+                type="text"
+                @click="
+                  handleEdit(scope.row);
+                  itemDisable = true;
+                "
+              >
+                <i class="el-icon-view"></i>
+              </el-button>
             </el-tooltip>
             <el-tooltip
               content="编辑"
@@ -376,7 +386,11 @@
               placement="top"
               v-if="activeName === '待发'"
             >
-              <el-button type="text" @click="handleEdit(scope.row)">
+              <el-button
+                class="margin-left-5px"
+                type="text"
+                @click="handleEdit(scope.row)"
+              >
                 <i class="el-icon-edit"></i>
               </el-button>
             </el-tooltip>
@@ -394,7 +408,7 @@
                 confirm-button-text="确定"
                 @confirm="deleteData(scope.row)"
               >
-                <el-button type="text" slot="reference">
+                <el-button class="margin-left-5px" type="text" slot="reference">
                   <i class="el-icon-delete"></i>
                 </el-button>
               </el-popconfirm>
@@ -427,6 +441,7 @@ import ApprovalOpinions from "@/components/ApprovalOpinions";
 import UserApi from "@/api/UserApi";
 import { formatDate } from "@/assets/date";
 import ApprovalOpinionApi from "@/api/ApprovalOpinionApi";
+import ApprovalProcessStep from "@/components/approvalFormComponents/ApprovalProcessStep";
 
 let checkPhone = (rule, value, callback) => {
   let reg = /^1[345789]\d{9}$/;
@@ -438,7 +453,10 @@ let checkPhone = (rule, value, callback) => {
 };
 export default {
   name: "IntentionRegistrationManagement",
-  components: { ApprovalOpinions },
+  components: {
+    ApprovalProcessStep,
+    ApprovalOpinions
+  },
   mixins: [common],
   data() {
     return {
@@ -451,6 +469,9 @@ export default {
       currentPage: 1,
       activeName: "待发",
       modalFormVisible: false,
+      sendDisable: false,
+      submitDisable: false,
+      itemDisable: false,
       intentionRegistrationForm: {
         formId: "",
         enterpriseName: "",
@@ -558,14 +579,19 @@ export default {
       approvalProcess: [],
       contractType: "意向登记",
       submitLoading: false,
-      sendLoading: false,
-      activeStep: 0,
-      approvalStep: [],
-      stepLoading: false
+      sendLoading: false
     };
   },
   methods: {
     searchByKey() {
+      if (this.searchKey === "") {
+        this.$message({
+          showClose: true,
+          message: "请输入关键字",
+          type: "error"
+        });
+        return;
+      }
       this.searchLoading = true;
       this.tableLoading = true;
       IntentionRegistrationFormApi.getIntentionRegistrationFormTableByKey({
@@ -627,24 +653,29 @@ export default {
         });
     },
     closeModal() {
-      this.$refs.intentionRegistrationForm.resetFields();
+      this.modalFormVisible = false;
+      this.$refs["intentionRegistrationForm"].resetFields();
+      Object.keys(this.intentionRegistrationForm).forEach(item => {
+        this.intentionRegistrationForm[item] = "";
+      });
       this.intentionRegistrationForm.applyDate = formatDate(
         new Date(),
         "yyyy-MM-dd"
       );
       this.intentionRegistrationForm.formId = "";
+      this.intentionRegistrationForm.status = "";
       this.intentionRegistrationForm.principal = JSON.parse(
         localStorage.getItem("userInfo")
       ).username;
-      this.modalFormVisible = false;
+      this.itemDisable = false;
     },
-    handleEdit(row) {
-      this.approvalProcess = common.methods.getApprovalProcess("意向登记");
-      this.getIntentionRegistrationFormById(row.formId);
+    async handleEdit(row) {
+      this.intentionRegistrationForm.formId = row.formId;
+      await this.getIntentionRegistrationFormById(row.formId);
       this.modalFormVisible = true;
     },
-    getIntentionRegistrationFormById(formId) {
-      IntentionRegistrationFormApi.getIntentionRegistrationFormDetail({
+    async getIntentionRegistrationFormById(formId) {
+      await IntentionRegistrationFormApi.getIntentionRegistrationFormDetail({
         formId: formId
       })
         .then(response => {
@@ -660,7 +691,7 @@ export default {
           });
         });
     },
-    handleTabsClick() {
+    handleTabsClick(val) {
       this.getIntentionRegistrationFormTable();
     },
     handleNewForm() {
@@ -737,6 +768,7 @@ export default {
       this.$refs["intentionRegistrationForm"].validate(valid => {
         if (valid) {
           this.submitLoading = true;
+          this.sendDisable = true;
           IntentionRegistrationFormApi.updateIntentionRegistrationForm({
             intentionRegistrationForm: this.intentionRegistrationForm
           })
@@ -749,10 +781,12 @@ export default {
                 });
               }
               this.submitLoading = false;
+              this.sendDisable = false;
               this.getIntentionRegistrationFormTable();
-              this.closeModal();
+              /* this.closeModal();*/
             })
             .catch(error => {
+              this.sendDisable = false;
               this.submitLoading = false;
               this.$message({
                 showClose: true,
@@ -769,6 +803,7 @@ export default {
       this.$refs["intentionRegistrationForm"].validate(valid => {
         if (valid) {
           this.sendLoading = true;
+          this.submitDisable = true;
           IntentionRegistrationFormApi.sendIntentionRegistrationForm({
             form: this.intentionRegistrationForm
           })
@@ -781,11 +816,13 @@ export default {
                 });
               }
               this.sendLoading = false;
+              this.submitDisable = false;
               this.getIntentionRegistrationFormTable();
               this.closeModal();
               setTimeout(() => this.$router.go(0), 500);
             })
             .catch(error => {
+              this.submitDisable = false;
               this.sendLoading = false;
               this.$message({
                 showClose: true,
@@ -797,36 +834,6 @@ export default {
           return false;
         }
       });
-    },
-    getApprovalStep(row) {
-      this.stepLoading = true;
-      ApprovalOpinionApi.getApprovalOpinionStepByFormId({
-        formId: row.formId,
-        contractType: "意向登记"
-      })
-        .then(response => {
-          if (response.data.responseCode === 200) {
-            this.approvalStep = response.data.step;
-            for (let i = 0; i < this.approvalStep.length; i++) {
-              if (
-                this.approvalStep[i].status === "待审批" ||
-                this.approvalStep[i].status === "拒绝"
-              ) {
-                this.activeStep = this.approvalStep[i].opinionId;
-                break;
-              }
-            }
-          }
-          this.stepLoading = false;
-        })
-        .catch(error => {
-          this.stepLoading = false;
-          this.$message({
-            showClose: true,
-            message: error,
-            type: "error"
-          });
-        });
     },
     deleteData(row) {
       IntentionRegistrationFormApi.deleteIntentionRegistrationForm({
@@ -849,22 +856,6 @@ export default {
             type: "error"
           });
         });
-    },
-    setStepStatus(status, opinionId) {
-      if (opinionId === this.activeStep) {
-        if (status === "拒绝") {
-          return "error";
-        }
-        return "process";
-      }
-      switch (status) {
-        case "待审批":
-          return "wait";
-        case "同意":
-          return "success";
-        case "拒绝":
-          return "error";
-      }
     }
   },
   mounted() {

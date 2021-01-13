@@ -31,5 +31,26 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getEnterpriseComponentTableData(posData) {
+    return request({
+      url: "/getEnterpriseComponentTableData",
+      data: posData,
+      method: "post"
+    });
+  },
+  getEnterpriseComponentTableDataByKey(posData) {
+    return request({
+      url: "/getEnterpriseComponentTableDataByKey",
+      data: posData,
+      method: "post"
+    });
+  },
+  getIntentionAgreementComponentEnterpriseData(posData) {
+    return request({
+      url: "/getIntentionAgreementComponentEnterpriseData",
+      data: posData,
+      method: "post"
+    });
   }
 };

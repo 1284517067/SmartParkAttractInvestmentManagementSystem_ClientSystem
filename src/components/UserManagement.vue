@@ -110,56 +110,31 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="编辑"
-              placement="top"
-            >
-              <el-button
-                class="table-button"
-                type="text"
-                @click="handleUserEdit(scope.row)"
-              >
+            <el-tooltip effect="dark" content="编辑" placement="top">
+              <el-button type="text" @click="handleUserEdit(scope.row)">
                 <i class="el-icon-edit"></i>
               </el-button>
             </el-tooltip>
             <el-tooltip
-              class="item"
               effect="dark"
               :content="scope.row.status === '禁用' ? '启用账号' : '禁用账号'"
               placement="top"
             >
-              <el-button
-                class="table-button"
-                @click="handleUserSwitch(scope.row)"
-                type="text"
-              >
+              <el-button @click="handleUserSwitch(scope.row)" type="text">
                 <i :class="switchIconClass(scope.row.status)"></i>
               </el-button>
             </el-tooltip>
             <el-tooltip
-              class="item"
               effect="dark"
               :content="scope.row.status === '锁定' ? '启用账号' : '锁定账号'"
               placement="top"
             >
-              <el-button
-                type="text"
-                class="table-button"
-                @click="handleUserLock(scope.row)"
-              >
+              <el-button type="text" @click="handleUserLock(scope.row)">
                 <i :class="switchIconLock(scope.row.status)"></i>
               </el-button>
             </el-tooltip>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="注销账号"
-              placement="top"
-            >
+            <el-tooltip effect="dark" content="注销账号" placement="top">
               <el-popconfirm
-                class="table-button"
                 title="确认注销该账号吗"
                 cancel-button-type="default"
                 cancel-button-text="取消"
@@ -172,14 +147,8 @@
                 </el-button>
               </el-popconfirm>
             </el-tooltip>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="重置密码"
-              placement="top"
-            >
+            <el-tooltip effect="dark" content="重置密码" placement="top">
               <el-popconfirm
-                class="table-button"
                 title="确认重置该账号的密码吗"
                 cancel-button-type="default"
                 cancel-button-text="取消"

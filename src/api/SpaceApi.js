@@ -36,5 +36,19 @@ export default {
       url: "/getParkSelect",
       method: "get"
     });
+  },
+  getIntentionAgreementComponentSpaceData(posData) {
+    return request({
+      url: "/getIntentionAgreementComponentSpaceData",
+      data: posData,
+      method: "post"
+    });
+  },
+  lazyLoadIntentionAgreementSpaceLeaf(posData) {
+    return request({
+      url: "/lazyLoadIntentionAgreementSpaceLeaf",
+      data: posData,
+      method: "post"
+    });
   }
 };
