@@ -66,6 +66,11 @@
         v-if="contractType === '意向协议'"
       >
       </IntentionAgreementComponent>
+      <LeaseContractComponent
+        :form-id="formId"
+        v-if="contractType === '租赁合同'"
+      >
+      </LeaseContractComponent>
       <OpinionComponent
         :contract-type="contractType"
         :id="formId"
@@ -82,10 +87,12 @@ import ApprovalApi from "@/api/ApprovalApi";
 import IntentionRegistrationForm from "@/components/approvalFormComponents/IntentionRegistrationForm";
 import OpinionComponent from "@/components/approvalFormComponents/OpinionComponent";
 import IntentionAgreementComponent from "@/components/approvalFormComponents/IntentionAgreementComponent";
+import LeaseContractComponent from "@/components/approvalFormComponents/LeaseContractComponent";
 
 export default {
   name: "MessageBlock",
   components: {
+    LeaseContractComponent,
     IntentionAgreementComponent,
     OpinionComponent,
     IntentionRegistrationForm

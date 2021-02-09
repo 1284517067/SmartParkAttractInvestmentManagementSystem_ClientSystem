@@ -19,6 +19,8 @@ import ProjectRecycleBin from "@/components/ProjectRecycleBin";
 import MyProject from "@/components/MyProject";
 import ApprovalMessage from "@/components/ApprovalMessage";
 import IntentionAgreementManagement from "@/components/IntentionAgreementManagement";
+import LeaseContractApplication from "@/components/LeaseContractApplication";
+import PayItemManagement from "@/components/PayItemManagement";
 
 Vue.use(VueRouter);
 
@@ -97,6 +99,14 @@ const routes = [
       {
         path: "IntentionAgreementManagement",
         component: IntentionAgreementManagement
+      },
+      {
+        path: "LeaseContractApplication",
+        component: LeaseContractApplication
+      },
+      {
+        path: "PayItemManagement",
+        component: PayItemManagement
       }
     ]
   }

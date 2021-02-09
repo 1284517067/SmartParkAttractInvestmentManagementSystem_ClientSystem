@@ -50,5 +50,12 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getLeaseContractSpaceData(posData) {
+    return request({
+      url: "/getLeaseContractSpaceData",
+      data: posData,
+      method: "post"
+    });
   }
 };
