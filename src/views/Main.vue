@@ -110,7 +110,7 @@
             </div>
           </el-menu>
         </el-aside>
-        <el-main style="height: 100%" class="bg-light">
+        <el-main style="height: 100%">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -128,7 +128,15 @@ export default {
     return {
       menu: "",
       user: "",
-      messageCount: 0
+      messageCount: 0,
+      websocket: "",
+      lockReconnect: false, //是否真正建立连接
+      timeout: 30 * 1000, //30秒一次心跳
+      timeoutObj: null, //心跳的心跳倒计时
+      serverTimeoutObj: null, //心跳倒计时
+      timeoutnum: null, //断开重连倒计时
+      messageList: [],
+      messageValue: ""
     };
   },
   methods: {
@@ -171,9 +179,108 @@ export default {
             type: "error"
           });
         });
+    },
+    conectWebSocket() {
+      console.log("准备建立连接");
+      if (this.user === undefined || this.user === "") {
+        return;
+      }
+      if ("WebSocket" in window) {
+        console.log("建立连接");
+        this.websocket = new WebSocket(
+          "ws://localhost:8081/webSocket/" + this.user
+        );
+        this.initWebSocket();
+        console.log("连接创建完毕");
+      } else {
+        this.$message({
+          showClose: true,
+          message: "不支持建立socket连接",
+          type: "error"
+        });
+      }
+    },
+    initWebSocket() {
+      //连接发生错误时的回调方法
+      this.websocket.onerror = this.onError;
+
+      //连接成功建立时的回调方法
+      this.websocket.onopen = this.onOpen;
+
+      //接受到消息的回调方法
+      this.websocket.onmessage = this.onMessage;
+      //连接关闭的回调方法
+      this.websocket.onclose = this.onClose;
+    },
+    onOpen() {
+      console.log("【WebSocket】连接成功");
+      this.websocket.send(1);
+      this.start();
+    },
+    onError() {
+      console.log("【WebSocket】发生错误");
+      this.reconnect();
+    },
+    onMessage(e) {
+      let data = JSON.parse(e.data);
+      console.log("【WebSocket】收到服务端消息");
+      console.log(data);
+      switch (data.type) {
+        case "updateMessageCount":
+          this.messageCount = data.messageCount;
+          break;
+      }
+      this.reset();
+    },
+    onClose(e) {
+      console.log("【WebSocket】断开连接", e);
+      this.reconnect();
+    },
+    reconnect() {
+      let that = this;
+      if (this.lockReconnect) {
+        return;
+      }
+      this.lockReconnect = true;
+      //没连接上会一直重连,设置延迟避免请求过多
+      this.timeoutnum && clearTimeout(this.timeoutnum);
+      this.timeoutnum = setTimeout(() => {
+        this.conectWebSocket();
+        this.lockReconnect = false;
+      }, 5000);
+    },
+    reset() {
+      //重置心跳
+      //清除时间
+      clearTimeout(this.timeoutObj);
+      clearTimeout(this.serverTimeoutObj);
+      //重启心跳
+    },
+    start() {
+      this.timeoutObj && clearTimeout(this.timeoutObj);
+      this.serverTimeoutObj && clearTimeout(this.serverTimeoutObj);
+      this.timeoutObj = setTimeout(() => {
+        //这里发送一个心跳,后端收到后,返回一个心跳消息
+        if (this.websocket.readyState === 1) {
+          //连接正常
+          this.websocket.send(JSON.stringify("heartCheck"));
+        } else {
+          //否则重连
+          this.reconnect();
+        }
+        this.serverTimeoutObj = setTimeout(() => {
+          this.websocket.close();
+        }, this.timeout);
+      }, this.timeout);
+    },
+    wsSend() {},
+    sendMessage() {
+      let msg = { msg: "1", toUser: "admin" };
+      this.websocket.send(JSON.stringify(msg));
     }
   },
   mounted() {
+    this.conectWebSocket();
     this.generateMessageCount();
   },
 
@@ -198,6 +305,9 @@ export default {
           break;
       }
     });
+  },
+  beforeDestroy() {
+    this.websocket.close();
   }
 };
 </script>

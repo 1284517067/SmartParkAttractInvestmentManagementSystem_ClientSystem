@@ -48,5 +48,11 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getUsernameList() {
+    return request({
+      url: "/getUsernameList",
+      method: "get"
+    });
   }
 };

@@ -21,6 +21,7 @@ import ApprovalMessage from "@/components/ApprovalMessage";
 import IntentionAgreementManagement from "@/components/IntentionAgreementManagement";
 import LeaseContractApplication from "@/components/LeaseContractApplication";
 import PayItemManagement from "@/components/PayItemManagement";
+import EnterApplication from "@/components/EnterApplication";
 
 Vue.use(VueRouter);
 
@@ -107,6 +108,10 @@ const routes = [
       {
         path: "PayItemManagement",
         component: PayItemManagement
+      },
+      {
+        path: "EnterApplication",
+        component: EnterApplication
       }
     ]
   }

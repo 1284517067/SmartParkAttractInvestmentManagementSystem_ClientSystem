@@ -3,7 +3,7 @@
     <div class="message-card" :class="switchCardTheme(title)">
       <div class="message-card-title">{{ title }}事项</div>
       <div class="message-card-count">
-        {{ count }}
+        {{ count > 99 ? "99+" : count }}
       </div>
     </div>
     <div class="padding"></div>
@@ -54,6 +54,7 @@
       modal
       show-close
       destroy-on-close
+      title="消息审批"
       :visible.sync="modalFormVisible"
     >
       <IntentionRegistrationForm
@@ -71,6 +72,11 @@
         v-if="contractType === '租赁合同'"
       >
       </LeaseContractComponent>
+      <EnterApplicationComponent
+        :form-id="formId"
+        v-if="contractType === '入驻申请'"
+      >
+      </EnterApplicationComponent>
       <OpinionComponent
         :contract-type="contractType"
         :id="formId"
@@ -88,10 +94,12 @@ import IntentionRegistrationForm from "@/components/approvalFormComponents/Inten
 import OpinionComponent from "@/components/approvalFormComponents/OpinionComponent";
 import IntentionAgreementComponent from "@/components/approvalFormComponents/IntentionAgreementComponent";
 import LeaseContractComponent from "@/components/approvalFormComponents/LeaseContractComponent";
+import EnterApplicationComponent from "@/components/approvalFormComponents/EnterApplicationComponent";
 
 export default {
   name: "MessageBlock",
   components: {
+    EnterApplicationComponent,
     LeaseContractComponent,
     IntentionAgreementComponent,
     OpinionComponent,

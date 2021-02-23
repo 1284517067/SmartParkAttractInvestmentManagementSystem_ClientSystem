@@ -507,7 +507,8 @@ export default {
         enterpriseIntroduction: "",
         enterpriseTel: "",
         spaceName: "",
-        source: ""
+        source: "",
+        enterParks: []
       },
       rules: {
         enterpriseName: [
@@ -680,6 +681,7 @@ export default {
           let code = response.data.responseCode;
           if (code === 200) {
             this.tableData = response.data.tableData;
+
             this.total = response.data.total;
           }
           this.tableLoading = false;

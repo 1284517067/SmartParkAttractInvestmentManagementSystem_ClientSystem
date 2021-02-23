@@ -575,6 +575,14 @@ export default {
     sendForm() {
       this.$refs["leaseContractForm"].validate(valid => {
         if (valid) {
+          if (this.spaces.length === 0) {
+            this.$message({
+              showClose: true,
+              message: "请选择租赁房间",
+              type: "error"
+            });
+            return;
+          }
           this.sendLoading = true;
           this.saveDisable = true;
           LeaseContractApi.sendLeaseContract({
@@ -609,8 +617,16 @@ export default {
     saveForm() {
       this.$refs["leaseContractForm"].validate(valid => {
         if (valid) {
-          /* this.sendLoading = true;
-          this.saveDisable = true;*/
+          if (this.spaces.length === 0) {
+            this.$message({
+              showClose: true,
+              message: "请选择租赁房间",
+              type: "error"
+            });
+            return;
+          }
+          this.sendLoading = true;
+          this.saveDisable = true;
           LeaseContractApi.saveLeaseContract({
             leaseContract: this.leaseContractForm,
             spaces: this.spaces,

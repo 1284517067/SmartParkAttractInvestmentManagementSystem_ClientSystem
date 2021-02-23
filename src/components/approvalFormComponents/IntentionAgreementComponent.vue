@@ -293,7 +293,7 @@
       </el-form>
       <div slot="footer">
         <el-button type="primary" @click="saveSpace">保存</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="spaceModalVisible = false">取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -360,8 +360,9 @@ export default {
         value: "spaceId",
         children: "children",
         isLeaf: "leaf",
-        lazyLoad(node, resolve) {
+        lazyLoad: (node, resolve) => {
           const { level } = node;
+          console.log(node);
           if (level === 0) {
             SpaceApi.getSpaceTreeData()
               .then(response => {
@@ -376,7 +377,8 @@ export default {
               });
           } else {
             SpaceApi.lazyLoadIntentionAgreementSpaceLeaf({
-              spaceId: node.data.spaceId
+              spaceId: node.data.spaceId,
+              enterpriseId: this.intentionAgreementForm.enterpriseId
             })
               .then(response => {
                 if (response.data.responseCode === 200) {
@@ -514,6 +516,17 @@ export default {
       this.spaces.splice(index, 1);
     },
     handleOpenSpaceModal() {
+      if (
+        this.intentionAgreementForm.enterpriseId === undefined ||
+        this.intentionAgreementForm.enterpriseId === ""
+      ) {
+        this.$message({
+          showClose: true,
+          message: "请先选择企业",
+          type: "error"
+        });
+        return;
+      }
       this.spaceModalVisible = true;
     },
     saveSpace() {

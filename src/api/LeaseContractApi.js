@@ -49,5 +49,12 @@ export default {
       data: posData,
       method: "post"
     });
+  },
+  getEnterApplicationComponentLeaseContractData(posData) {
+    return request({
+      url: "/getEnterApplicationComponentLeaseContractData",
+      data: posData,
+      method: "post"
+    });
   }
 };

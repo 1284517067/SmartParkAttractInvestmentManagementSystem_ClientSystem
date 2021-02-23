@@ -92,7 +92,7 @@ export default {
                     "userInfo",
                     JSON.stringify(response.data.userInfo)
                   );
-                  this.$router.push("/main");
+                  this.$router.push("/main/ApprovalMessage");
                   this.$message({
                     showClose: true,
                     message: "登录成功",
